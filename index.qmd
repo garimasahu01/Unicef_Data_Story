@@ -1,10 +1,12 @@
 ---
 title: "Global Struggle: The Fight Between Adolescent Life and Death"
-subtitle: "Spring 2025 | BAA1030 Data Analytics & Storytelling (20074)"
-Student Name: "Garima Sahu  
-Student ID: [Your ID]  
-Programme: MSc in Management (Strategy)"
-acknowledgement: "With deep gratitude to Professor Dr. Damien Dupre, Dublin City University, for his invaluable support and insight."
+subtitle: |
+  Spring 2025 | BAA1030 Data Analytics & Storytelling (20074)<br>
+  <strong>Student Name:</strong> Garima Sahu<br>
+  <strong>Student ID:</strong> A00013327<br>
+  <strong>Programme:</strong> MSc in Management (Strategy)<br>
+  With deep gratitude to Professor Dr. Damien Dupre, Dublin City University, for his invaluable support and insight.
+
 format: html
 editor: visual
 embed-resources: true
@@ -35,7 +37,7 @@ This report brings visibility to those young lives, lost too soon. By exploring 
 **Title:** Where the Youth Are: Global Share of Adolescent Population  
 
 
-```{r leaflet_map, echo = FALSE, message = FALSE, warning = FALSE}
+```{r leaflet_map,  message = FALSE, warning = FALSE}
 library(tidyverse)
 library(leaflet)
 library(rnaturalearth)
@@ -98,6 +100,7 @@ leaflet(world_data, options = leafletOptions(attributionControl = FALSE)) %>%
             values = world_data$TotalPopulation,
             title = "Adolescent Population",
             position = "bottomright")
+
 library(tidyverse)
 library(scales)
 
@@ -134,7 +137,7 @@ Over 60% of the world’s adolescents live in Asia and Sub-Saharan Africa—regi
 ---
 
 ## 2. Stacked Bar Chart: Gender Distribution of Mortality Across Countries  
-```{r, echo = FALSE, message = FALSE, warning = FALSE}
+```{r, message = FALSE, warning = FALSE}
 library(tidyverse)
 library(scales)
 
@@ -199,7 +202,7 @@ In high-mortality countries, boys face greater risks from violence, conflict, an
 ---
 
 ## 3. Scatter Plot: Life Expectancy vs Adolescent Mortality Rate
-```{r, echo = FALSE, message = FALSE, warning = FALSE}
+```{r, message = FALSE, warning = FALSE}
 library(readr)
 library(dplyr)
 library(ggplot2)
@@ -246,7 +249,7 @@ Countries with high life expectancy consistently show lower adolescent mortality
 ---
 
 ## 4. Line Chart: Adolescent Deprivation Over Time (2010–2022)  
-```{r, echo = FALSE, message = FALSE, warning = FALSE}
+```{r, message = FALSE, warning = FALSE}
 library(readr)
 library(ggplot2)
 library(dplyr)
@@ -303,52 +306,51 @@ Global deprivation rates among adolescents have declined over the last decade, b
 ---
 
 ## 5. Horizontal Bar Chart: Leading Causes of Adolescent Mortality  
-```{r, echo = FALSE, message = FALSE, warning = FALSE}
-library(readr)
-library(ggplot2)
-library(dplyr)
+```{r, message = FALSE, warning = FALSE}
+library(readxl)
+library(tidyverse)
 library(scales)
 
-# Load datasets
-cause_meta <- read_csv("docs/death_causes.csv")
-death_data <- read_csv("docs/unicef_indicator_1.csv")
+# Step 1: Load all columns as character to avoid type conflicts
+death_factors <- read_excel("docs/Factors accefting death for ado.xlsx", col_types = "text")
 
-# Step 1: Filter for "Top causes of death" in death_causes.csv
-top_causes <- cause_meta %>%
-  filter(Indicator == "Top causes of death") %>%
-  select(Country, Level)  # Level contains the actual cause of death
-
-# Step 2: Join with mortality data from unicef_indicator_1.csv
-cause_with_deaths <- death_data %>%
-  inner_join(top_causes, by = c("country" = "Country")) %>%
-  group_by(Level) %>%
-  summarise(DeathCount = sum(obs_value, na.rm = TRUE), .groups = "drop") %>%
-  arrange(desc(DeathCount)) %>%
+# Step 2: Pivot and clean the data
+cause_summary <- death_factors %>%
+  pivot_longer(cols = -Country, names_to = "Cause", values_to = "DeathCount") %>%
+  filter(!is.na(DeathCount) & !DeathCount %in% c("−", "–", "x", "", "NA")) %>%
+  mutate(DeathCount = as.numeric(DeathCount)) %>%
+  group_by(Cause) %>%
+  summarise(TotalDeaths = sum(DeathCount, na.rm = TRUE), .groups = "drop") %>%
+  arrange(desc(TotalDeaths)) %>%
   slice_head(n = 5)
 
-# Step 3: Create the bar chart
-ggplot(cause_with_deaths, aes(x = reorder(Level, DeathCount), y = DeathCount)) +
+# Step 3: Plot with data labels
+ggplot(cause_summary, aes(x = reorder(Cause, TotalDeaths), y = TotalDeaths)) +
   geom_bar(stat = "identity", fill = "tomato") +
+  geom_text(aes(label = comma(round(TotalDeaths))), hjust = -0.1, size = 3.5, color = "black") +
   coord_flip() +
   labs(
-    title = "The Silent Killers: Top 5 Causes of Adolescent Deaths",
+    title = "Top 5 Causes of Adolescent Deaths",
     x = "Cause of Death",
-    y = "Number of Deaths"
+    y = "Total Deaths"
   ) +
-  scale_y_continuous(labels = comma) +
+  scale_y_continuous(labels = comma, expand = expansion(mult = c(0, 0.15))) +
   theme_minimal()
+
+
 
 ```
 **Insight:**  
 Road injuries, lower respiratory infections, suicide, and maternal conditions dominate adolescent mortality. Many of these causes are preventable with timely healthcare and awareness. 
 
 **Top 5 Causes Globally (per WHO):**  
-- Road Traffic Injuries  
-- Lower Respiratory Infections  
-- Suicide  
-- Diarrheal Diseases  
-- Maternal Conditions (in girls aged 15–19)
-
+- Bulling 2010-2017<br>
+- Alcohol use 2016<br>  
+- Overweight 2016<br> 
+- Tobacco use 2013−2017<br>
+- Intimate Partner Violence 
+  2010−2018
+ 
 ---
 
 # Recommended Policy Actions

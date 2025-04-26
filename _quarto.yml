@@ -4,12 +4,13 @@ project:
 
 website: 
   title: "UNICEF Data Story"
-  
+
 format:
   html:
     theme: cosmo
     css: styles.css
     toc: true
+    code-fold: true
 
 
 
