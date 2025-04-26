@@ -33,7 +33,7 @@ This report brings visibility to those young lives, lost too soon. By exploring 
 
 # Visual Analysis and Insights
 
-## 1. Pie Chart: Global Distribution of Adolescents  
+## 1. World Map: Global Distribution of Adolescents  
 **Title:** Where the Youth Are: Global Share of Adolescent Population  
 
 
@@ -100,7 +100,17 @@ leaflet(world_data, options = leafletOptions(attributionControl = FALSE)) %>%
             values = world_data$TotalPopulation,
             title = "Adolescent Population",
             position = "bottomright")
+```
+**Insight:**  
+Over 60% of the world’s adolescents live in Asia and Sub-Saharan Africa—regions facing some of the highest youth mortality rates. This concentration demands urgent attention from global policymakers.  
+- Asia: 42%  
+- Sub-Saharan Africa: 21%  
+- Latin America: 10%  
+- Other Regions: 27%
 
+## 2. Bar Chart: Global Distribution of Adolescents 
+**Title:** National Breakdown of Adolescent Populations
+```{r,  message = FALSE, warning = FALSE}
 library(tidyverse)
 library(scales)
 
@@ -129,14 +139,11 @@ ggplot(top10_country_summary, aes(x = reorder(country, TotalPopulation), y = Tot
 
 ```
 **Insight:**  
-Over 60% of the world’s adolescents live in Asia and Sub-Saharan Africa—regions facing some of the highest youth mortality rates. This concentration demands urgent attention from global policymakers.  
-- Asia: 42%  
-- Sub-Saharan Africa: 21%  
-- Latin America: 10%  
-- Other Regions: 27%
+India, China, Nigeria, and Pakistan bear the highest burden of adolescent deaths globally. Their large youth populations and systemic health gaps make them critical focus areas for targeted interventions. 
+
 ---
 
-## 2. Stacked Bar Chart: Gender Distribution of Mortality Across Countries  
+## 3. Stacked Bar Chart: Gender Distribution of Mortality Across Countries  
 ```{r, message = FALSE, warning = FALSE}
 library(tidyverse)
 library(scales)
@@ -201,7 +208,7 @@ In high-mortality countries, boys face greater risks from violence, conflict, an
 
 ---
 
-## 3. Scatter Plot: Life Expectancy vs Adolescent Mortality Rate
+## 4. Scatter Plot: Life Expectancy vs Adolescent Mortality Rate
 ```{r, message = FALSE, warning = FALSE}
 library(readr)
 library(dplyr)
@@ -248,7 +255,7 @@ Countries with high life expectancy consistently show lower adolescent mortality
 
 ---
 
-## 4. Line Chart: Adolescent Deprivation Over Time (2010–2022)  
+## 5. Line Chart: Adolescent Deprivation Over Time (2010–2022)  
 ```{r, message = FALSE, warning = FALSE}
 library(readr)
 library(ggplot2)
@@ -305,7 +312,7 @@ Global deprivation rates among adolescents have declined over the last decade, b
 
 ---
 
-## 5. Horizontal Bar Chart: Leading Causes of Adolescent Mortality  
+## 6. Horizontal Bar Chart: Leading Causes of Adolescent Mortality  
 ```{r, message = FALSE, warning = FALSE}
 library(readxl)
 library(tidyverse)
