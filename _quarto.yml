@@ -2,12 +2,9 @@ project:
   type: website
   output-dir: docs
 
-website:
-  title: "Unicef_Data_Story"
-  navbar:
-    left:
-      - href: index.qmd
-
+website: 
+  title: "UNICEF Data Story"
+  
 format:
   html:
     theme: cosmo

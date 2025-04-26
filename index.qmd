@@ -1,12 +1,14 @@
 ---
-title: "A Global Struggle: The Fight Between Adolescent Life and Death"
+title: "Global Struggle: The Fight Between Adolescent Life and Death"
 subtitle: "Spring 2025 | BAA1030 Data Analytics & Storytelling (20074)"
-author: "[Your Name]  
+Student Name: "Garima Sahu  
 Student ID: [Your ID]  
-Programme: [Your Programme]"
+Programme: MSc in Management (Strategy)"
 acknowledgement: "With deep gratitude to Professor Dr. Damien Dupre, Dublin City University, for his invaluable support and insight."
 format: html
 editor: visual
+embed-resources: true
+code-fold: true
 ---
 
 # Executive Summary
@@ -15,7 +17,7 @@ This report dives into the global crisis of adolescent mortality using current d
 
 Through a series of powerful data visualizations, we reveal key patterns, spotlight the world’s most vulnerable populations, and offer policy recommendations aligned with SDG 3 (Good Health and Well-Being) and SDG 10 (Reduced Inequalities).
 
-The aim is clear: to turn data into action that can save lives.
+<B>The aim is clear: to turn data into action that can save lives.</B>
 
 ---
 
@@ -31,20 +33,20 @@ This report brings visibility to those young lives, lost too soon. By exploring 
 
 ## 1. Pie Chart: Global Distribution of Adolescents  
 **Title:** Where the Youth Are: Global Share of Adolescent Population  
-**Insight:**  
-Over 60% of the world’s adolescents live in Asia and Sub-Saharan Africa—regions facing some of the highest youth mortality rates. This concentration demands urgent attention from global policymakers.  
-- Asia: 42%  
-- Sub-Saharan Africa: 21%  
-- Latin America: 10%  
-- Other Regions: 27%
 
-```{r, echo = FALSE, message = FALSE, warning = FALSE, results = 'hide'}
+
+```{r leaflet_map, echo = FALSE, message = FALSE, warning = FALSE}
 library(tidyverse)
+library(leaflet)
+library(rnaturalearth)
+library(rnaturalearthdata)
+library(sf)
+library(scales)
 
-# Load your CSV file
+# Load your data
 adolescent_data <- read_csv("docs/unicef_indicator_1.csv")
 
-# Manually create a region mapping (expand as needed)
+# Region mapping
 region_map <- tribble(
   ~country,            ~Region,
   "India",             "Asia",
@@ -58,38 +60,183 @@ region_map <- tribble(
   "France",            "Other Regions"
 )
 
-# Join region mapping
+# Combine data
 adolescent_data <- adolescent_data %>%
   left_join(region_map, by = "country")
 
-# Summarize total population by region
-region_summary <- adolescent_data %>%
-  group_by(Region) %>%
-  summarise(TotalPopulation = sum(obs_value, na.rm = TRUE)) %>%
-  mutate(Percentage = TotalPopulation / sum(TotalPopulation) * 100)
+# Aggregate by country
+country_summary <- adolescent_data %>%
+  group_by(country, Region) %>%
+  summarise(TotalPopulation = sum(obs_value, na.rm = TRUE), .groups = 'drop')
 
-# Create pie chart
-ggplot(region_summary, aes(x = "", y = Percentage, fill = Region)) +
-  geom_col(width = 1) +
-  coord_polar(theta = "y") +
-  theme_void() +
-  labs(title = "Where the Youth Are: Global Share of Adolescent Population") +
-  theme(legend.title = element_blank())
+# Load map data
+world <- ne_countries(scale = "medium", returnclass = "sf")
+
+# Merge country data with map
+world_data <- world %>%
+  left_join(country_summary, by = c("name" = "country"))
+
+# Create leaflet map
+leaflet(world_data, options = leafletOptions(attributionControl = FALSE)) %>%
+  addPolygons(
+    fillColor = ~colorQuantile("YlOrRd", TotalPopulation)(TotalPopulation),
+    fillOpacity = 0.7,
+    color = "#444444",
+    weight = 1,
+    label = ~paste0(
+      "", name, " ",
+      "Population: ", comma(TotalPopulation)
+    ),
+    labelOptions = labelOptions(direction = "auto"),
+    highlightOptions = highlightOptions(
+      weight = 2,
+      color = "#666",
+      bringToFront = TRUE
+    )
+  ) %>%
+  addLegend(pal = colorQuantile("YlOrRd", world_data$TotalPopulation),
+            values = world_data$TotalPopulation,
+            title = "Adolescent Population",
+            position = "bottomright")
+library(tidyverse)
+library(scales)
+
+# Clean and get top 10 countries
+top10_country_summary <- country_summary %>%
+  filter(!is.na(TotalPopulation) & TotalPopulation > 0) %>%
+  arrange(desc(TotalPopulation)) %>%
+  slice_head(n = 10)
+
+# Create horizontal bar chart (country-only, no region color)
+ggplot(top10_country_summary, aes(x = reorder(country, TotalPopulation), y = TotalPopulation)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  coord_flip() +
+  labs(
+    title = "Top 10 Countries by Adolescent Population",
+    x = "Country",
+    y = "Adolescent Population"
+  ) +
+  scale_y_continuous(labels = comma) +
+  theme_minimal() +
+  theme(
+    axis.text.y = element_text(size = 10)
+  )
+
 
 
 ```
+**Insight:**  
+Over 60% of the world’s adolescents live in Asia and Sub-Saharan Africa—regions facing some of the highest youth mortality rates. This concentration demands urgent attention from global policymakers.  
+- Asia: 42%  
+- Sub-Saharan Africa: 21%  
+- Latin America: 10%  
+- Other Regions: 27%
 ---
 
 ## 2. Stacked Bar Chart: Gender Distribution of Mortality Across Countries  
-**Title:** Gender Divide: Who's at Greater Risk?  
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+library(tidyverse)
+library(scales)
+
+# Load the data
+gender_mortality <- read_csv("docs/unicef_indicator_1.csv")
+
+# Clean and rename
+gender_mortality <- gender_mortality %>%
+  rename(
+    Country = country,
+    Gender = sex,
+    MortalityRate = obs_value
+  ) %>%
+  filter(!is.na(MortalityRate))
+
+# Filter to latest year per Country and Gender
+latest_year_data <- gender_mortality %>%
+  group_by(Country, Gender) %>%
+  filter(time_period == max(time_period)) %>%
+  ungroup()
+
+# Calculate total mortality to find top 5 countries
+top_5_countries <- latest_year_data %>%
+  group_by(Country) %>%
+  summarise(Total = sum(MortalityRate, na.rm = TRUE)) %>%
+  arrange(desc(Total)) %>%
+  slice_head(n = 5)
+
+# Filter to top 5 countries only
+top_gender_mortality <- latest_year_data %>%
+  filter(Country %in% top_5_countries$Country)
+
+# Reorder country factor for plotting
+top_gender_mortality <- top_gender_mortality %>%
+  mutate(Country = factor(Country, levels = top_5_countries$Country))
+
+# Plot stacked bars with gender-specific labels
+ggplot(top_gender_mortality, aes(x = Country, y = MortalityRate, fill = Gender)) +
+  geom_bar(stat = "identity") +
+  geom_text(
+    aes(label = comma(round(MortalityRate))),
+    position = position_stack(vjust = 0.5),
+    color = "white",
+    fontface = "bold",
+    size = 4
+  ) +
+  labs(
+    title = "Gender Divide: Who's at Greater Risk? (Top 5 Countries)",
+    x = "Country",
+    y = "Adolescent Mortality Rate (per 100,000)"
+  ) +
+  scale_y_continuous(labels = comma, expand = expansion(mult = c(0, 0.05))) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+```
 **Insight:**  
 In high-mortality countries, boys face greater risks from violence, conflict, and road injuries, while girls are more vulnerable to maternal health complications.  
 - In low-income nations, 7 out of 10 countries report higher male adolescent mortality.
 
 ---
 
-## 3. Scatter Plot: Life Expectancy vs Adolescent Mortality Rate  
-**Title:** The Life-Death Link: How Longevity Reflects Youth Survival  
+## 3. Scatter Plot: Life Expectancy vs Adolescent Mortality Rate
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+library(readr)
+library(dplyr)
+library(ggplot2)
+
+# Load datasets
+life_df <- read_csv("docs/unicef_metadata.csv")
+mortality_df <- read_csv("docs/unicef_indicator_1.csv")
+
+# Prepare life expectancy data
+life_df <- life_df %>%
+  distinct(country, .keep_all = TRUE) %>%
+  select(country, `Life expectancy at birth, total (years)`) %>%
+  rename(
+    Country = country,
+    LifeExpectancy = `Life expectancy at birth, total (years)`
+  )
+
+# Prepare and aggregate mortality data (e.g., average per country)
+mortality_df <- mortality_df %>%
+  group_by(country) %>%
+  summarise(AdolescentMortalityRate = mean(obs_value, na.rm = TRUE)) %>%
+  rename(Country = country)
+
+# Join datasets
+merged_df <- inner_join(life_df, mortality_df, by = "Country")
+
+# Plot
+ggplot(merged_df, aes(x = LifeExpectancy, y = AdolescentMortalityRate)) +
+  geom_point(color = "steelblue", alpha = 0.7) +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(
+    title = "The Life-Death Link: How Longevity Reflects Youth Survival",
+    x = "Life Expectancy (Years)",
+    y = "Adolescent Mortality Rate (per 100,000)"
+  ) +
+  theme_minimal()
+```
 **Insight:**  
 Countries with high life expectancy consistently show lower adolescent mortality rates. This reflects broader systems of health, safety, and social investment.  
 - Pearson’s correlation: -0.72  
@@ -99,7 +246,55 @@ Countries with high life expectancy consistently show lower adolescent mortality
 ---
 
 ## 4. Line Chart: Adolescent Deprivation Over Time (2010–2022)  
-**Title:** Poverty’s Grip: Trends in Adolescent Deprivation  
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+library(readr)
+library(ggplot2)
+library(dplyr)
+library(plotly)
+library(htmlwidgets)
+
+# Read data
+deprivation_trend <- read_csv("docs/unicef_indicator_2.csv")
+
+# Rename and prepare
+deprivation_trend <- deprivation_trend %>%
+  rename(
+    Year = time_period,
+    DeprivationRate = obs_value
+  ) %>%
+  mutate(Year = as.numeric(Year))
+
+# Aggregate deprivation by year (mean)
+trend_summary <- deprivation_trend %>%
+  group_by(Year) %>%
+  summarise(DeprivationRate = mean(DeprivationRate, na.rm = TRUE))
+
+# Create ggplot
+p <- ggplot(trend_summary, aes(x = Year, y = DeprivationRate)) +
+  geom_line(color = "firebrick", size = 1.2) +
+  labs(
+    title = "Poverty’s Grip: Trends in Adolescent Deprivation",
+    x = "Year",
+    y = "Average Deprivation Rate (%)"
+  ) +
+  theme_minimal()
+
+# Convert to interactive plot and remove all branding with JS
+plotly_obj <- ggplotly(p)
+
+plotly_clean <- htmlwidgets::onRender(
+  plotly::config(plotly_obj, displayModeBar = FALSE, displaylogo = FALSE),
+  "function(el) {
+     var logo = el.querySelectorAll('.modebar-group .logo-text');
+     if (logo.length > 0) {
+       logo[0].parentNode.removeChild(logo[0]);
+     }
+   }"
+)
+
+plotly_clean
+
+```
 **Insight:**  
 Global deprivation rates among adolescents have declined over the last decade, but conflict zones have seen spikes. The pandemic also stalled progress in several regions.  
 - Global decline: 15% from 2010 to 2022  
@@ -108,33 +303,51 @@ Global deprivation rates among adolescents have declined over the last decade, b
 ---
 
 ## 5. Horizontal Bar Chart: Leading Causes of Adolescent Mortality  
-**Title:** The Silent Killers: What’s Taking Young Lives?  
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+library(readr)
+library(ggplot2)
+library(dplyr)
+library(scales)
+
+# Load datasets
+cause_meta <- read_csv("docs/death_causes.csv")
+death_data <- read_csv("docs/unicef_indicator_1.csv")
+
+# Step 1: Filter for "Top causes of death" in death_causes.csv
+top_causes <- cause_meta %>%
+  filter(Indicator == "Top causes of death") %>%
+  select(Country, Level)  # Level contains the actual cause of death
+
+# Step 2: Join with mortality data from unicef_indicator_1.csv
+cause_with_deaths <- death_data %>%
+  inner_join(top_causes, by = c("country" = "Country")) %>%
+  group_by(Level) %>%
+  summarise(DeathCount = sum(obs_value, na.rm = TRUE), .groups = "drop") %>%
+  arrange(desc(DeathCount)) %>%
+  slice_head(n = 5)
+
+# Step 3: Create the bar chart
+ggplot(cause_with_deaths, aes(x = reorder(Level, DeathCount), y = DeathCount)) +
+  geom_bar(stat = "identity", fill = "tomato") +
+  coord_flip() +
+  labs(
+    title = "The Silent Killers: Top 5 Causes of Adolescent Deaths",
+    x = "Cause of Death",
+    y = "Number of Deaths"
+  ) +
+  scale_y_continuous(labels = comma) +
+  theme_minimal()
+
+```
 **Insight:**  
-Road injuries, lower respiratory infections, suicide, and maternal conditions dominate adolescent mortality. Many of these causes are preventable with timely healthcare and awareness.  
+Road injuries, lower respiratory infections, suicide, and maternal conditions dominate adolescent mortality. Many of these causes are preventable with timely healthcare and awareness. 
+
 **Top 5 Causes Globally (per WHO):**  
 - Road Traffic Injuries  
 - Lower Respiratory Infections  
 - Suicide  
 - Diarrheal Diseases  
 - Maternal Conditions (in girls aged 15–19)
-
----
-
-## Optional: Weighted Adolescent Vulnerability Index  
-**Title:** The Most At-Risk: Countries Facing the Perfect Storm  
-**Insight:**  
-This composite index ranks the 10 most vulnerable countries based on mortality, GDP, and healthcare access. These are the countries that need integrated, urgent interventions.  
-**Examples:** Chad, Somalia, South Sudan, CAR, Afghanistan
-
----
-
-# SDG Alignment and Policy Implications
-
-## SDG 3 – Good Health and Well-Being  
-Adolescent health is central to achieving universal healthcare. Targeted interventions like mobile clinics, vaccine access, and sexual health education are essential.
-
-## SDG 10 – Reduced Inequalities  
-Reducing adolescent mortality is a direct pathway to closing health and income gaps between high- and low-income nations.
 
 ---
 
