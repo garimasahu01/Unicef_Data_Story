@@ -1,0 +1,73 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "title: \"A Global Struggle: The Fight Between Adolescent Life and Death\"\n",
+        "author: \"[Your Name]\"\n",
+        "date: \"Spring 2025\"\n",
+        "format:\n",
+        "  html:\n",
+        "    theme: cosmo\n",
+        "    embed-resources: true\n",
+        "    code-fold: true\n",
+        "    toc: true\n",
+        "    toc-depth: 2\n",
+        "    smooth-scroll: true\n",
+        "\n",
+        "---\n",
+        "\n",
+        "# Executive Summary\n",
+        "\n",
+        "This report explores global disparities in adolescent mortality, using real-world data from UNICEF and the World Bank.  \n",
+        "It examines the intersection of health outcomes with economic and social indicators such as GDP per capita, healthcare access, and life expectancy.  \n",
+        "Visual analytics identify critical regions where adolescents are at the highest risk of death, informing global policy actions aligned with **SDG 3 (Health)** and **SDG 10 (Inequality)**.\n",
+        "\n",
+        "# Introduction\n",
+        "\n",
+        "Adolescence should mark a period of growth and opportunity, yet millions of young lives are cut short each year due to preventable causes.\n",
+        "\n",
+        "This report uses global datasets to investigate adolescent mortality rates, the influence of economic development, and geographic disparities.  \n",
+        "By combining data-driven storytelling and visualizations, we seek to raise awareness and guide strategic interventions that can save adolescent lives worldwide.\n",
+        "\n",
+        "# Visual Analysis and Insights\n",
+        "\n",
+        "## Scatter Plot: GDP per Capita vs Adolescent Mortality Rate\n"
+      ],
+      "id": "b75221c4"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| label: fig-gdp-mortality\n",
+        "#| fig-cap: GDP per Capita vs Adolescent Mortality Rate\n",
+        "import pandas as pd\n",
+        "from plotnine import *\n",
+        "\n",
+        "data = pd.read_excel(\"Datawehave.xlsx\")\n",
+        "\n",
+        "(ggplot(data, aes('GDP', 'Adolescent_Deaths')) +\n",
+        " geom_point(color='red') +\n",
+        " geom_smooth(method='lm', color='blue') +\n",
+        " labs(title='GDP per Capita vs Adolescent Mortality Rate',\n",
+        "      x='GDP per Capita (USD)',\n",
+        "      y='Adolescent Mortality Rate') +\n",
+        " theme_minimal())"
+      ],
+      "id": "fig-gdp-mortality",
+      "execution_count": null,
+      "outputs": []
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "display_name": "Python 3",
+      "language": "python",
+      "name": "python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

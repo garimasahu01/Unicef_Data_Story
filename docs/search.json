@@ -2,9 +2,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Unicef_Data_Story",
+    "title": "A Global Struggle: The Fight Between Adolescent Life and Death",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+    "text": "This report dives into the global crisis of adolescent mortality using current datasets from UNICEF, the World Bank, and WHO. We examine how demographic, economic, health, and gender-based factors intersect to shape outcomes for young people between the ages of 10 and 19.\nThrough a series of powerful data visualizations, we reveal key patterns, spotlight the world’s most vulnerable populations, and offer policy recommendations aligned with SDG 3 (Good Health and Well-Being) and SDG 10 (Reduced Inequalities).\nThe aim is clear: to turn data into action that can save lives."
   },
   {
     "objectID": "about.html",
@@ -12,5 +12,117 @@
     "title": "About",
     "section": "",
     "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "index.html#scatter-plot-gdp-per-capita-vs-adolescent-mortality-rate",
+    "href": "index.html#scatter-plot-gdp-per-capita-vs-adolescent-mortality-rate",
+    "title": "A Global Struggle: The Fight Between Adolescent Life and Death",
+    "section": "Scatter Plot: GDP per Capita vs Adolescent Mortality Rate",
+    "text": "Scatter Plot: GDP per Capita vs Adolescent Mortality Rate\n\n\n\nGDP vs Adolescent Mortality\n\n\nInsight:\nA strong negative relationship exists between GDP per capita and adolescent mortality rates.\nHigher national wealth typically ensures better healthcare and lower mortality risks among adolescents."
+  },
+  {
+    "objectID": "index.html#bar-chart-top-10-countries-with-highest-adolescent-mortality",
+    "href": "index.html#bar-chart-top-10-countries-with-highest-adolescent-mortality",
+    "title": "A Global Struggle: The Fight Between Adolescent Life and Death",
+    "section": "Bar Chart: Top 10 Countries with Highest Adolescent Mortality",
+    "text": "Bar Chart: Top 10 Countries with Highest Adolescent Mortality\n\n\n\nTop 10 Mortality Countries\n\n\nInsight:\nCountries such as Nigeria, Chad, and DR Congo suffer from the highest adolescent death rates, highlighting systemic healthcare and socio-economic failures."
+  },
+  {
+    "objectID": "index.html#time-series-global-adolescent-mortality-trends-20102022",
+    "href": "index.html#time-series-global-adolescent-mortality-trends-20102022",
+    "title": "A Global Struggle: The Fight Between Adolescent Life and Death",
+    "section": "Time-Series: Global Adolescent Mortality Trends (2010–2022)",
+    "text": "Time-Series: Global Adolescent Mortality Trends (2010–2022)\n\n\n\nGlobal Mortality Trend\n\n\nInsight:\nAlthough global adolescent mortality is declining, certain conflict-affected countries show stagnation or worsening trends, calling for focused interventions."
+  },
+  {
+    "objectID": "index.html#world-map-geographic-distribution-of-adolescent-mortality",
+    "href": "index.html#world-map-geographic-distribution-of-adolescent-mortality",
+    "title": "A Global Struggle: The Fight Between Adolescent Life and Death",
+    "section": "World Map: Geographic Distribution of Adolescent Mortality",
+    "text": "World Map: Geographic Distribution of Adolescent Mortality\n\n\n\nWorld Mortality Map\n\n\nInsight:\nSub-Saharan Africa stands out as the epicenter of adolescent deaths.\nThe map reveals clear geographic inequalities requiring urgent policy focus."
+  },
+  {
+    "objectID": "index.html#faceted-chart-mortality-by-income-group",
+    "href": "index.html#faceted-chart-mortality-by-income-group",
+    "title": "A Global Struggle: The Fight Between Adolescent Life and Death",
+    "section": "Faceted Chart: Mortality by Income Group",
+    "text": "Faceted Chart: Mortality by Income Group\n\n\n\nMortality by Income Group\n\n\nInsight:\nMortality rates are dramatically higher in low-income countries compared to high- and middle-income regions, confirming the role of economic development in youth survival."
+  },
+  {
+    "objectID": "index.html#gender-gap-in-adolescent-mortality",
+    "href": "index.html#gender-gap-in-adolescent-mortality",
+    "title": "A Global Struggle: The Fight Between Adolescent Life and Death",
+    "section": "Gender Gap in Adolescent Mortality",
+    "text": "Gender Gap in Adolescent Mortality\n\n\n\nGender Gap in Mortality\n\n\nInsight:\nAdolescent boys face slightly higher mortality rates than girls, particularly in low- and middle-income countries, driven by violence and behavioral risk factors."
+  },
+  {
+    "objectID": "index.html#weighted-adolescent-vulnerability-index",
+    "href": "index.html#weighted-adolescent-vulnerability-index",
+    "title": "A Global Struggle: The Fight Between Adolescent Life and Death",
+    "section": "Weighted Adolescent Vulnerability Index",
+    "text": "Weighted Adolescent Vulnerability Index\n\n\n\nWeighted Vulnerability Index\n\n\nInsight:\nA composite index shows the most vulnerable countries suffer not only from high mortality but also low healthcare investment and low GDP.\nThese countries must be prioritized for international support."
+  },
+  {
+    "objectID": "index.html#sdg-3-good-health-and-well-being",
+    "href": "index.html#sdg-3-good-health-and-well-being",
+    "title": "A Global Struggle: The Fight Between Adolescent Life and Death",
+    "section": "SDG 3 – Good Health and Well-Being",
+    "text": "SDG 3 – Good Health and Well-Being\nAdolescent health is central to achieving universal healthcare. Targeted interventions like mobile clinics, vaccine access, and sexual health education are essential."
+  },
+  {
+    "objectID": "index.html#sdg-10-reduced-inequalities",
+    "href": "index.html#sdg-10-reduced-inequalities",
+    "title": "A Global Struggle: The Fight Between Adolescent Life and Death",
+    "section": "SDG 10 – Reduced Inequalities",
+    "text": "SDG 10 – Reduced Inequalities\nReducing adolescent mortality is a direct pathway to closing health and income gaps between high- and low-income nations."
+  },
+  {
+    "objectID": "index.html#where-the-youth-are-global-share-of-adolescent-population",
+    "href": "index.html#where-the-youth-are-global-share-of-adolescent-population",
+    "title": "A Global Struggle: The Fight Between Adolescent Life and Death",
+    "section": "3.1 1. Where the Youth Are: Global Share of Adolescent Population",
+    "text": "3.1 1. Where the Youth Are: Global Share of Adolescent Population\n\npie(c(42, 21, 10, 27),\n    labels = c(\"Asia\", \"Sub-Saharan Africa\", \"Latin America\", \"Other Regions\"),\n    main = \"Global Share of Adolescent Population\")\n\n\n\n\nFigure 1: Over 60% of the world’s adolescents live in Asia and Sub-Saharan Africa."
+  },
+  {
+    "objectID": "index.html#pie-chart-global-distribution-of-adolescents",
+    "href": "index.html#pie-chart-global-distribution-of-adolescents",
+    "title": "A Global Struggle: The Fight Between Adolescent Life and Death",
+    "section": "1. Pie Chart: Global Distribution of Adolescents",
+    "text": "1. Pie Chart: Global Distribution of Adolescents\nTitle: Where the Youth Are: Global Share of Adolescent Population\nInsight:\nOver 60% of the world’s adolescents live in Asia and Sub-Saharan Africa—regions facing some of the highest youth mortality rates. This concentration demands urgent attention from global policymakers.\n- Asia: 42%\n- Sub-Saharan Africa: 21%\n- Latin America: 10%\n- Other Regions: 27%"
+  },
+  {
+    "objectID": "index.html#stacked-bar-chart-gender-distribution-of-mortality-across-countries",
+    "href": "index.html#stacked-bar-chart-gender-distribution-of-mortality-across-countries",
+    "title": "A Global Struggle: The Fight Between Adolescent Life and Death",
+    "section": "2. Stacked Bar Chart: Gender Distribution of Mortality Across Countries",
+    "text": "2. Stacked Bar Chart: Gender Distribution of Mortality Across Countries\nTitle: Gender Divide: Who’s at Greater Risk?\nInsight:\nIn high-mortality countries, boys face greater risks from violence, conflict, and road injuries, while girls are more vulnerable to maternal health complications.\n- In low-income nations, 7 out of 10 countries report higher male adolescent mortality."
+  },
+  {
+    "objectID": "index.html#scatter-plot-life-expectancy-vs-adolescent-mortality-rate",
+    "href": "index.html#scatter-plot-life-expectancy-vs-adolescent-mortality-rate",
+    "title": "A Global Struggle: The Fight Between Adolescent Life and Death",
+    "section": "3. Scatter Plot: Life Expectancy vs Adolescent Mortality Rate",
+    "text": "3. Scatter Plot: Life Expectancy vs Adolescent Mortality Rate\nTitle: The Life-Death Link: How Longevity Reflects Youth Survival\nInsight:\nCountries with high life expectancy consistently show lower adolescent mortality rates. This reflects broader systems of health, safety, and social investment.\n- Pearson’s correlation: -0.72\n- High-life-expectancy countries like Japan and Norway report mortality rates &lt;10 per 100,000\n- Low-life-expectancy nations like Chad and CAR report rates &gt;300"
+  },
+  {
+    "objectID": "index.html#line-chart-adolescent-deprivation-over-time-20102022",
+    "href": "index.html#line-chart-adolescent-deprivation-over-time-20102022",
+    "title": "A Global Struggle: The Fight Between Adolescent Life and Death",
+    "section": "4. Line Chart: Adolescent Deprivation Over Time (2010–2022)",
+    "text": "4. Line Chart: Adolescent Deprivation Over Time (2010–2022)\nTitle: Poverty’s Grip: Trends in Adolescent Deprivation\nInsight:\nGlobal deprivation rates among adolescents have declined over the last decade, but conflict zones have seen spikes. The pandemic also stalled progress in several regions.\n- Global decline: 15% from 2010 to 2022\n- Increase observed in Yemen, South Sudan, and Venezuela during periods of instability"
+  },
+  {
+    "objectID": "index.html#horizontal-bar-chart-leading-causes-of-adolescent-mortality",
+    "href": "index.html#horizontal-bar-chart-leading-causes-of-adolescent-mortality",
+    "title": "A Global Struggle: The Fight Between Adolescent Life and Death",
+    "section": "5. Horizontal Bar Chart: Leading Causes of Adolescent Mortality",
+    "text": "5. Horizontal Bar Chart: Leading Causes of Adolescent Mortality\nTitle: The Silent Killers: What’s Taking Young Lives?\nInsight:\nRoad injuries, lower respiratory infections, suicide, and maternal conditions dominate adolescent mortality. Many of these causes are preventable with timely healthcare and awareness.\nTop 5 Causes Globally (per WHO):\n- Road Traffic Injuries\n- Lower Respiratory Infections\n- Suicide\n- Diarrheal Diseases\n- Maternal Conditions (in girls aged 15–19)"
+  },
+  {
+    "objectID": "index.html#optional-weighted-adolescent-vulnerability-index",
+    "href": "index.html#optional-weighted-adolescent-vulnerability-index",
+    "title": "A Global Struggle: The Fight Between Adolescent Life and Death",
+    "section": "Optional: Weighted Adolescent Vulnerability Index",
+    "text": "Optional: Weighted Adolescent Vulnerability Index\nTitle: The Most At-Risk: Countries Facing the Perfect Storm\nInsight:\nThis composite index ranks the 10 most vulnerable countries based on mortality, GDP, and healthcare access. These are the countries that need integrated, urgent interventions.\nExamples: Chad, Somalia, South Sudan, CAR, Afghanistan"
   }
 ]
